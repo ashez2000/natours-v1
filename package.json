@@ -1,0 +1,34 @@
+{
+  "name": "natours-v1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./src/main.js",
+    "start:dev": "nodemon ./src/main.js",
+    "start:prod": "NODE_ENV=production nodemon ./src/main.js",
+    "data:import": "node ./data/seed.js -i",
+    "data:destroy": "node ./data/seed.js -d"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "mongoose": "^6.4.3",
+    "morgan": "^1.10.0",
+    "slugify": "^1.6.5"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  },
+  "keywords": [],
+  "author": "Aswin Gangadharan",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ashez2000/natours-v1.git"
+  },
+  "homepage": "https://github.com/ashez2000/natours-v1#readme",
+  "bugs": {
+    "url": "https://github.com/ashez2000/natours-v1/issues"
+  }
+}
