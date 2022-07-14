@@ -1,6 +1,11 @@
 const Tour = require('../models/tour.model')
 const asyncHandler = require('../utils/async-handler')
 
+/**
+ * @description - Get all tours
+ * @route GET /api/v1/tours
+ * @access Public
+*/
 const getAllTours = asyncHandler(async (req, res, next) => {
   const features = new APIFeatures(Tour.find(), req.query)
     .filter()
@@ -19,6 +24,11 @@ const getAllTours = asyncHandler(async (req, res, next) => {
   })
 })
 
+/**
+ * @description - Get a tour by id
+ * @route GET /api/v1/tours/:id
+ * @access Public
+*/
 const getTour = asyncHandler(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id)
 
@@ -30,6 +40,11 @@ const getTour = asyncHandler(async (req, res, next) => {
   })
 })
 
+/**
+ * @description - Create a tour
+ * @route POST /api/v1/tours
+ * @access Private
+*/
 const createTour = asyncHandler((req, res ,next) => {
   const tour = await Tour.create(req.body)
 
@@ -41,6 +56,11 @@ const createTour = asyncHandler((req, res ,next) => {
   })
 })
 
+/**
+ * @description - Update a tour
+ * @route PUT /api/v1/tours/:id
+ * @access Private
+*/
 const updateTour = asyncHandler((req, res ,next) => {
   const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
@@ -55,6 +75,11 @@ const updateTour = asyncHandler((req, res ,next) => {
   })
 })
 
+/**
+ * @description - Delete a tour
+ * @route DELETE /api/v1/tours/:id
+ * @access Private
+*/
 const deleteTour = asyncHandler((req, res ,next) => {
   await Tour.findByIdAndDelete(req.params.id)
 
