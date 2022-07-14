@@ -12,7 +12,7 @@ class ApiFeatures {
     let queryStr = JSON.stringify(queryObj)
     queryStr = queryStr.replace(/\b(gte|gt|lte|lt)\b/g, (match) => `$${match}`)
 
-    this.queryModel.find(JSON.parse(queryStr)).select('-__v')
+    this.queryModel = this.queryModel.find(JSON.parse(queryStr))
 
     return this
   }
@@ -20,9 +20,9 @@ class ApiFeatures {
   sort() {
     if (this.reqQuery.sort) {
       const sortBy = this.reqQuery.sort.split(',').join(' ')
-      this.queryModel.find().sort(sortBy)
+      this.queryModel = this.queryModel.sort(sortBy)
     } else {
-      this.queryModel.find().sort('-createdAt')
+      this.queryModel = this.queryModel.sort('-createdAt')
     }
 
     return this
@@ -31,9 +31,9 @@ class ApiFeatures {
   limitFields() {
     if (this.reqQuery.fields) {
       const fields = this.reqQuery.fields.split(',').join(' ')
-      this.queryModel.find().select(fields)
+      this.queryModel = this.queryModel.select(fields)
     } else {
-      this.queryModel.find().select('-__v')
+      this.queryModel = this.queryModel.select('-__v')
     }
 
     return this
@@ -44,7 +44,7 @@ class ApiFeatures {
     const limit = this.reqQuery.limit * 1 || 20
     const skip = (page - 1) * limit
 
-    this.queryModel.find().skip(skip).limit(limit)
+    this.queryModel = this.queryModel.skip(skip).limit(limit)
 
     return this
   }

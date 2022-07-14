@@ -1,19 +1,20 @@
 const Tour = require('../models/tour.model')
-const asyncHandler = require('../utils/async-handler')
+const asyncHandler = require('../utils/async-handler.utils')
+const ApiFeatures = require('../utils/api-features.utils')
 
 /**
  * @description - Get all tours
  * @route GET /api/v1/tours
  * @access Public
-*/
+ */
 const getAllTours = asyncHandler(async (req, res, next) => {
-  const features = new APIFeatures(Tour.find(), req.query)
+  const features = new ApiFeatures(req.query, Tour.find())
     .filter()
     .sort()
     .limitFields()
     .paginate()
 
-  const tours = await features.query
+  const tours = await features.queryModel
 
   res.status(200).json({
     status: 'success',
@@ -28,7 +29,7 @@ const getAllTours = asyncHandler(async (req, res, next) => {
  * @description - Get a tour by id
  * @route GET /api/v1/tours/:id
  * @access Public
-*/
+ */
 const getTour = asyncHandler(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id)
 
@@ -44,8 +45,8 @@ const getTour = asyncHandler(async (req, res, next) => {
  * @description - Create a tour
  * @route POST /api/v1/tours
  * @access Private
-*/
-const createTour = asyncHandler((req, res ,next) => {
+ */
+const createTour = asyncHandler(async (req, res, next) => {
   const tour = await Tour.create(req.body)
 
   res.status(201).json({
@@ -60,8 +61,8 @@ const createTour = asyncHandler((req, res ,next) => {
  * @description - Update a tour
  * @route PUT /api/v1/tours/:id
  * @access Private
-*/
-const updateTour = asyncHandler((req, res ,next) => {
+ */
+const updateTour = asyncHandler(async (req, res, next) => {
   const tour = await Tour.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
     runValidators: true,
@@ -79,8 +80,8 @@ const updateTour = asyncHandler((req, res ,next) => {
  * @description - Delete a tour
  * @route DELETE /api/v1/tours/:id
  * @access Private
-*/
-const deleteTour = asyncHandler((req, res ,next) => {
+ */
+const deleteTour = asyncHandler(async (req, res, next) => {
   await Tour.findByIdAndDelete(req.params.id)
 
   res.status(204).json({
