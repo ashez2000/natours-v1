@@ -5,10 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/main.js",
-    "start:dev": "nodemon ./src/main.js",
-    "start:prod": "NODE_ENV=production nodemon ./src/main.js",
-    "data:import": "node ./data/seed.js -i",
-    "data:destroy": "node ./data/seed.js -d"
+    "dev": "nodemon ./src/main.js",
+    "prod": "NODE_ENV=production nodemon ./src/main.js",
+    "data:im": "node ./data/seed.js -i",
+    "data:ds": "node ./data/seed.js -d"
   },
   "dependencies": {
     "dotenv": "^16.0.1",

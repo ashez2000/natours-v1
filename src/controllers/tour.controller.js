@@ -1,6 +1,7 @@
 const Tour = require('../models/tour.model')
 const asyncHandler = require('../utils/async-handler.utils')
 const ApiFeatures = require('../utils/api-features.utils')
+const AppError = require('../utils/app-error.utils')
 
 /**
  * @description - Get all tours
@@ -16,7 +17,7 @@ const getAllTours = asyncHandler(async (req, res, next) => {
 
   const tours = await features.queryModel
 
-  res.status(200).json({
+  return res.status(200).json({
     status: 'success',
     results: tours.length,
     data: {
@@ -33,7 +34,11 @@ const getAllTours = asyncHandler(async (req, res, next) => {
 const getTour = asyncHandler(async (req, res, next) => {
   const tour = await Tour.findById(req.params.id)
 
-  res.status(200).json({
+  if (!tour) {
+    return next(new AppError('No tour found with that ID', 404))
+  }
+
+  return res.status(200).json({
     status: 'success',
     data: {
       tour,
@@ -49,7 +54,11 @@ const getTour = asyncHandler(async (req, res, next) => {
 const createTour = asyncHandler(async (req, res, next) => {
   const tour = await Tour.create(req.body)
 
-  res.status(201).json({
+  if (!tour) {
+    return next(new AppError('No tour found with that ID', 404))
+  }
+
+  return res.status(201).json({
     status: 'success',
     data: {
       tour,
